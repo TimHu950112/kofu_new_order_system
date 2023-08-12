@@ -8,3 +8,4 @@ python-bcrypt
 pytz
 datetime
 requests
+bcrypt
