@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="/static/css/table.css">
+    <title>口福食品|訂單系統</title>
+</head>
+
+<body>
+    <div class="container_custom">
+        <!-- Sidebar Section -->
+        <aside>
+            <div class="toggle">
+                <div class="logo">
+                    <!-- <img src="/static/images/logo.png"> -->
+                    <h2>口福食品<span class="danger"> 訂單系統</span></h2>
+                </div>
+                <div class="close" id="close-btn">
+                    <span class="material-icons-sharp">
+                        close
+                    </span>
+                </div>
+            </div>
+
+            <div class="sidebar">
+                <a href="#" >
+                  <span class="material-icons-sharp">
+                      person_outline
+                  </span>
+                  <h3>用戶設定</h3>
+                </a>
+                <a href="/" class="active" >
+                    <span class="material-icons-sharp">
+                        dashboard
+                    </span>
+                    <h3>訂單管理</h3>
+                </a>
+            <!-- <a href="#">
+                    <span class="material-icons-sharp">
+                        receipt_long
+                    </span>
+                    <h3>History</h3>
+                </a>
+                <a href="#" class="">
+                    <span class="material-icons-sharp">
+                        insights
+                    </span>
+                    <h3>Analytics</h3>
+                </a>
+                <a href="#">
+                    <span class="material-icons-sharp">
+                        mail_outline
+                    </span>
+                    <h3>Tickets</h3>
+                    <span class="message-count">27</span>
+                </a>
+                <a href="#">
+                    <span class="material-icons-sharp">
+                        inventory
+                    </span>
+                    <h3>Sale List</h3>
+                </a>
+                <a href="#">
+                    <span class="material-icons-sharp">
+                        report_gmailerrorred
+                    </span>
+                    <h3>Reports</h3>
+                </a> -->
+                <a href="/key_setting/load_page">
+                    <span class="material-icons-sharp">
+                        settings
+                    </span>
+                    <h3>密鑰設定</h3>
+                </a>
+                <!-- <a href="#">
+                    <span class="material-icons-sharp">
+                        add
+                    </span>
+                    <h3>New Login</h3>
+                </a> -->
+                <a href="/logout">
+                    <span class="material-icons-sharp">
+                        logout
+                    </span>
+                    <h3>登出</h3>
+                </a>
+            </div>
+        </aside>
+        <!-- End of Sidebar Section -->
+
+        <!-- Main Content -->
+        <main>
+            <h2 style="margin-top: 10px;">訂單總覽-預設為所有訂單</h2>
+            <!-- Analyses -->
+            <div class="analyse">
+                <div class="sales">
+                    <div class="status">
+                        <div class="info">
+                          <h3 style="font-weight: 700;">總訂單數</h3>
+                            <h1 id="order_number_text">讀取中...</h1>
+                        </div>
+                        <div class="progresss">
+                            <svg>
+                                <circle cx="38" cy="38" r="36"></circle>
+                            </svg>
+                            <div class="percentage">
+                                <p></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="visits">
+                    <div class="status">
+                        <div class="info">
+                          <h3 style="font-weight: 700;">未完成數</h3>
+                            <h1 id="not_finish_order_number_text">讀取中...</h1>
+                        </div>
+                        <div class="progresss">
+                            <svg>
+                                <circle cx="38" cy="38" r="36"></circle>
+                            </svg>
+                            <div class="percentage">
+                                <p></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="searches">
+                    <div class="status">
+                        <div class="info">
+                          <h3 style="font-weight: 700;">位置數量</h3>
+                            <h1 id="location_number">讀取中...</h1>
+                        </div>
+                        <div class="progresss">
+                            <svg>
+                                <circle cx="38" cy="38" r="36"></circle>
+                            </svg>
+                            <div class="percentage">
+                                <p></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- End of Analyses -->
+
+            <!-- New Users Section -->
+            <!-- <div class="new-users">
+                <h2>New Users</h2>
+                <div class="user-list">
+                    <div class="user">
+                        <img src="/static/images/profile-2.jpg">
+                        <h2>Jack</h2>
+                        <p>54 Min Ago</p>
+                    </div>
+                    <div class="user">
+                        <img src="/static/images/profile-3.jpg">
+                        <h2>Amir</h2>
+                        <p>3 Hours Ago</p>
+                    </div>
+                    <div class="user">
+                        <img src="/static/images/profile-4.jpg">
+                        <h2>Ember</h2>
+                        <p>6 Hours Ago</p>
+                    </div>
+                    <div class="user">
+                        <img src="/static/images/plus.png">
+                        <h2>More</h2>
+                        <p>New User</p>
+                    </div>
+                </div>
+            </div> -->
+            <!-- End of New Users Section -->
+            
+              
+            <!-- Recent Orders Table -->
+            <div class="recent-orders" style="font-size: 18px; max-height:70vh !important; overflow:scroll;">
+                <h2>訂單明細</h2>
+
+                <div class="input-group mb-4">
+                    <select class="form-select form-select-lg" style="max-width:100px" aria-label="Large select example" id="search_list">
+                        <option selected>請選擇搜尋方式</option>
+                        <option value="today">當日訂單</option>
+                        <option value="all">所有訂單</option>
+                        <option value="_id">訂單編號</option>
+                        <option value="date">時間</option>
+                    </select>
+                    <input type="text" class="form-control" aria-label="Text input with 2 dropdown buttons" id="search_input">
+                    <button class="btn btn-success" type="button" id="search_button"><span class="material-icons-sharp">search</span></button>
+                  </div>
+
+                <table id="infoTable" class="overflow-auto">
+                    <thead class="align-items-start mx-auto">
+                        <tr>
+                            <th class="col-1">#</th>
+                            <th class="col-2">時間</th>
+                            <th class="col-2">地點</th>
+                            <th class="col-2">議員</th>
+                            <th class="col-3">商品與數量</th>
+                            <th class="col-1">狀態</th>
+                            <th class="col-1">備註</th>
+                        </tr>
+                    </thead>
+                    <tbody class="align-items-start mx-auto mt-2" id="html_order_list">
+                    </tbody>
+                </table>
+                <!-- <a href="#">Show All</a> -->
+            </div>
+            <!-- End of Recent Orders -->
+
+        </main>
+        <!-- End of Main Content -->
+
+        <!-- Right Section -->
+        <div class="right-section">
+            <div class="nav">
+                <button id="menu-btn">
+                    <span class="material-icons-sharp">
+                        menu
+                    </span>
+                </button>
+                <!-- <div class="dark-mode">
+                    <span class="material-icons-sharp active">
+                        light_mode
+                    </span>
+                    <span class="material-icons-sharp">
+                        dark_mode
+                    </span>
+                </div> -->
+
+                <div class="profile">
+                    <div class="info">
+                        <p>您好, <b>使用者</b></p>
+                        <small class="text-muted">管理員</small>
+                    </div>
+                    <div class="profile-photo">
+                        <img src="/static/images/profile-1.jpg">
+                    </div>
+                </div>
+
+            </div>
+            <!-- End of Nav -->
+            <div class="user-profile">
+                <div class="logo">
+                    <img src="https://i.imgur.com/uLNtyQN.png">
+                    <h2>口福食品</h2>
+                    <p>Designed By TimHu</p>
+                </div>
+            </div>
+
+            <div class="reminders">
+                <div class="header">
+                    <h2>訂單設定</h2>
+                    <span class="material-icons-sharp">
+                      settings_applications
+                    </span>
+                </div>
+
+                <div class="notification">
+                    <div class="icon">
+                        <span class="material-icons-sharp">
+                            check
+                        </span>
+                    </div>
+                    <div class="content" id="finish">
+                        <div class="info">
+                            <h3>完成訂單</h3>
+                            <small class="text_muted">
+                                完成後請立即登記
+                            </small>
+                        </div>
+                        <!-- <span class="material-icons-sharp">
+                            more_vert
+                        </span> -->
+                    </div>
+                </div>
+
+                <div class="notification deactive">
+                    <div class="icon">
+                        <span class="material-icons-sharp">
+                            delete
+                        </span>
+                    </div>
+                    <div class="content" id="delete">
+                        <div class="info">
+                            <h3>刪除訂單</h3>
+                            <small class="text_muted">
+                                刪除後將無法復原
+                            </small>
+                        </div>
+                        <!-- <span class="material-icons-sharp">
+                            more_vert
+                        </span> -->
+                    </div>
+                </div>
+
+                <div class="notification add-reminder" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                    <div>
+                        <span class="material-icons-sharp">
+                            add
+                        </span>
+                        <h3>新增訂單</h3>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+        <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h1 class="modal-title fs-5" id="exampleModalLabel">新增訂單</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body pb-3">
+                <div class="row">
+                    <div class="col">
+                        <div class="form-floating">
+                            <input type="text" class="form-control" id="order_id" placeholder="訂單編號" value="0" disabled>
+                            <label for="floatingPassword">訂單編號</label>
+                          </div>
+                        <label for="" class="mt-2 mb-3" style="font-size: medium;">送達時間</label><br>
+                        <span class="border border-dark-subtle mb-5 p-2"><input type="datetime-local" id="order_time"></span>
+                        <div class="form-floating mb-3 mt-4">
+                            <input type="text" class="form-control" id="location" placeholder="地點">
+                            <label for="floatingInput">地點</label>
+                          </div>
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" id="customer" placeholder="議員">
+                            <label for="floatingPassword">議員</label>
+                        </div>        
+                        <table class="table" style="font-size: medium;">
+                            <thead>
+                              <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">商品名稱</th>
+                                <th scope="col">數量</th>
+                              </tr>
+                            </thead>
+                            <tbody id="table_body">
+                              <tr>
+                              </tr>
+                            </tbody>
+                          </table>
+                        
+
+                        
+                        </div>
+                    <div class="row justify-content-start">
+                        <div class="col-3">
+                            <select class="form-select form-select-lg mb-3" style="max-width:100px" aria-label="Large select example" id="item_list">
+                                <option selected>請選擇商品</option>
+                                <option value="毛和塔">毛和塔</option>
+                                <option value="壽桃">壽桃</option>
+                                <option value="蛋糕8吋">蛋糕8吋</option>
+                                <option value="蛋糕10吋">蛋糕10吋</option>
+                                <option value="蛋糕12吋">蛋糕12吋</option>
+                            </select>
+                        </div>
+                        <div class="col-3">
+                            <input type="text" class="form-control" placeholder="數量" style="height: 41px;" id="number">
+                        </div>
+                        <div class="col">
+                            <button class="btn btn-success" style="height:41px" id="add_item">加入訂物內容</button>
+                        </div>
+                    </div>
+                </div>
+                
+                  
+                
+                
+            </div>
+            <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+            <button type="button" class="btn btn-primary" id="send_order">送出</button>
+            </div>
+        </div>
+        </div>
+    </div>
+
+    <div id="order_modal"></div>
+
+
+
+    
+
+  
+
+    </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="/static/js/orders.js"></script>
+    <script src="/static/js/index.js"></script>
+    <script src="/static/js/table.js"></script>
+      <!-- Bootstrap JavaScript Libraries -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+    integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous">
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.min.js"
+    integrity="sha384-7VPbUDkoPSGFnVtYi0QogXtr74QeVeeIs99Qfg5YCF+TidwNdjvaKZX19NZ/e6oz" crossorigin="anonymous">
+    </script>
+</body>
+
+</html>
