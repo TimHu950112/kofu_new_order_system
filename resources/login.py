@@ -47,11 +47,14 @@ class RegisterResource(Resource):
     def __init__(self, **kwargs):
         self.users = kwargs['users']
 
+    @login_required
     def get(self):
+        
         response = make_response(render_template('register.html'))
         response.headers['Content-Type'] = 'text/html'
         return response
-
+    
+    @login_required
     def post(self):
         data = request.get_json()
         username = data.get('username')
@@ -62,7 +65,7 @@ class RegisterResource(Resource):
             return {'message': 'Username already exists'}, 400
 
         # 將密碼進行 bcrypt 雜湊處理
-        hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
+        hashed_password = bcrypt.hashpw(password.encode, bcrypt.gensalt())
 
         # 將使用者資料存入 MongoDB
         self.users.insert_one({'username': username, 'password': hashed_password})
