@@ -16,7 +16,7 @@ customer=db.customer
 print('\x1b[6;30;42m' + '資料庫連線成功'.center(87) + '\x1b[0m')
 
 app = Flask(__name__)
-app.secret_key = os.urandom(24)
+app.secret_key = os.getenv("session_key")
 
 # LINE 聊天機器人的基本資料
 line_bot_api = LineBotApi(os.getenv('line_access'))
