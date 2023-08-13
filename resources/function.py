@@ -46,8 +46,8 @@ def get_key(name):
 def bind_key(user,key,line_id):
     result=list(customer.find({'key':key}))
     if len(result)!=0:
-        customer.update({ '_id': result[0]['_id'] },{ '$pull': { 'key': key } });
-        customer.update({'_id': result[0]['_id'] },{ '$set': { "user."+user: line_id } })
+        customer.update_one{ '_id': result[0]['_id'] },{ '$pull': { 'key': key } });
+        customer.update_one({'_id': result[0]['_id'] },{ '$set': { "user."+user: line_id } })
         return '成功綁定-'+result[0]['name']
     else:
         return '無效的密鑰或發生錯誤，請聯繫客服'
