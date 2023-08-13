@@ -65,7 +65,8 @@ class RegisterResource(Resource):
             return {'message': 'Username already exists'}, 400
 
         # 將密碼進行 bcrypt 雜湊處理
-        hashed_password = bcrypt.hashpw(password.encode, bcrypt.gensalt())
+        hashed_password = hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
+
 
         # 將使用者資料存入 MongoDB
         self.users.insert_one({'username': username, 'password': hashed_password})
