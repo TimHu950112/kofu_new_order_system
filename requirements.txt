@@ -10,3 +10,5 @@ datetime
 requests
 py-bcrypt
 pandas
+numpy
+XlsxWriter
