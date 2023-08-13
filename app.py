@@ -43,6 +43,7 @@ api.add_resource(Delete_Order, '/delete_order/<string:order_id>')
 api.add_resource(Send_Order, '/send_order/<string:order_list>/<string:order_detail>')
 api.add_resource(Html_List,'/html_list/<string:date>')
 api.add_resource(Key_Setting,'/key_setting/<string:setting>')
+api.add_resource(Download_Excel,'/download_excel/<string:selection>')
 
 @app.before_request
 def before_request():

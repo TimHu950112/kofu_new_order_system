@@ -5,7 +5,7 @@ from datetime import datetime
 from linebot import LineBotApi, WebhookHandler
 from linebot.exceptions import InvalidSignatureError
 from linebot.models import MessageEvent, TextMessage, TextSendMessage
-import pymongo,os,certifi,pytz,io
+import pymongo,os,certifi,pytz,io,base64
 import pandas as pd
 
 load_dotenv()
@@ -129,10 +129,46 @@ class Key_Setting(Resource):
             
 class Download_Excel(Resource):
     @login_required
-    def get(self):
+    def get(self,selection):
+        id_list=[]
+        customer_list=[]
+        time_list=[]
+        location_list=[]
+        order_list=[]
+        status_list=[]
+        selection=selection.split('-')
+        for i in json.loads(request.args.get('table_data')):
+            if len(selection)!=3:
+                if selection[0] in i['order_list'] and i['disable']!=1:
+                    id_list.append(i['_id'])
+                    customer_list.append(i['customer'])
+                    time_list.append(i['year']+'-'+i['month']+'-'+i['date']+' '+i['time'])
+                    location_list.append(i['location'])
+                    order_list.append(str(i['order_list']))
+                    if i['status']==0:
+                        status_list.append('未完成')
+                    else:
+                        status_list.append('已完成')
+            else:
+                if i['disable']!=1:
+                    if selection[0] in i['order_list'] or selection[1] in i['order_list'] or selection[2] in i['order_list']:
+                        id_list.append(i['_id'])
+                        customer_list.append(i['customer'])
+                        time_list.append(i['year']+'-'+i['month']+'-'+i['date']+' '+i['time'])
+                        location_list.append(i['location'])
+                        order_list.append(str(i['order_list']))
+                        if i['status']==0:
+                            status_list.append('未完成')
+                        else:
+                            status_list.append('已完成')
+
         data = {
-        'Name': ['Alice', 'Bob', 'Charlie'],
-        'Age': [25, 30, 22]
+        '_id': id_list,
+        '時間':time_list,
+        '地點':location_list,
+        '議員': customer_list,
+        '商品清單':order_list,
+        '狀態':status_list,
         }
         df = pd.DataFrame(data)
 
@@ -141,9 +177,8 @@ class Download_Excel(Resource):
         with pd.ExcelWriter(excel_file, engine='xlsxwriter') as writer:
             df.to_excel(writer, sheet_name='Sheet1', index=False)
 
-        # 設定回應的標頭，告訴瀏覽器下載一個 Excel 檔案
-        excel_file.seek(0)
-        response = make_response(excel_file.read())
-        response.headers['Content-Type'] = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
-        response.headers['Content-Disposition'] = 'attachment; filename=data.xlsx'
-        return response
+       # 將 Excel 檔案的內容轉為 base64 編碼
+        excel_base64 = base64.b64encode(excel_file.getvalue()).decode('utf-8')
+
+        # 返回包含下載連結的 JSON 資料
+        return {'download_url': f'data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64,{excel_base64}'}

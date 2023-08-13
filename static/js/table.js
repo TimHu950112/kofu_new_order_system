@@ -1,5 +1,6 @@
 var order_id=0
 var order_list=[]
+var table_data=[]
 
 $( document ).ready(function() {
     // Get html_order_list Today
@@ -10,6 +11,7 @@ $( document ).ready(function() {
         data: {},
         success: function (response) {
             document.getElementById("order_id").value= response.order_id
+            table_data=response.html_order_list
             response.html_order_list=eval(JSON.parse(response.html_order_list))
             $("#html_order_list").html("");
 
@@ -153,6 +155,7 @@ $( document ).ready(function() {
             },
             success: function (response) {
                 document.getElementById("order_id").value= response.order_id
+                table_data=response.html_order_list
                 response.html_order_list=eval(JSON.parse(response.html_order_list))
                 $("#html_order_list").html("");
     
@@ -371,6 +374,25 @@ $( document ).ready(function() {
         }
         
 
+    });
+
+    $(".download_excel").click(function() {
+        console.log('clicked')
+        console.log($(this).attr("id"))
+        $.ajax({
+            url: "/download_excel/"+$(this).attr("id"),
+            type: "get",
+            contentType: "application/json",
+            data: {
+                table_data:table_data
+            },
+            success: function (response) {
+                var downloadLink = document.createElement('a');
+                downloadLink.href = response.download_url;
+                downloadLink.download = "出貨報表.xlsx"; // 在這裡設定你想要的檔名
+                downloadLink.click();
+            }   
+        }) 
     });
     
   });
