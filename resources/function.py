@@ -5,7 +5,8 @@ from datetime import datetime
 from linebot import LineBotApi, WebhookHandler
 from linebot.exceptions import InvalidSignatureError
 from linebot.models import MessageEvent, TextMessage, TextSendMessage
-import pymongo,os,certifi,pytz
+import pymongo,os,certifi,pytz,io
+import pandas as pd
 
 load_dotenv()
 
@@ -46,7 +47,7 @@ def get_key(name):
 def bind_key(user,key,line_id):
     result=list(customer.find({'key':key}))
     if len(result)!=0:
-        customer.update_one{ '_id': result[0]['_id'] },{ '$pull': { 'key': key } });
+        customer.update_one({ '_id': result[0]['_id'] },{ '$pull': { 'key': key } })
         customer.update_one({'_id': result[0]['_id'] },{ '$set': { "user."+user: line_id } })
         return '成功綁定-'+result[0]['name']
     else:
@@ -125,3 +126,24 @@ class Key_Setting(Resource):
             return make_response(render_template('key.html'))
         elif setting=='get_key':
             return jsonify(data=json.dumps(list(customer.find({},{'name':1,'key':1,'user':1,'_id':0}))))
+            
+class Download_Excel(Resource):
+    @login_required
+    def get(self):
+        data = {
+        'Name': ['Alice', 'Bob', 'Charlie'],
+        'Age': [25, 30, 22]
+        }
+        df = pd.DataFrame(data)
+
+        # 將 DataFrame 寫入 Excel 檔案
+        excel_file = io.BytesIO()
+        with pd.ExcelWriter(excel_file, engine='xlsxwriter') as writer:
+            df.to_excel(writer, sheet_name='Sheet1', index=False)
+
+        # 設定回應的標頭，告訴瀏覽器下載一個 Excel 檔案
+        excel_file.seek(0)
+        response = make_response(excel_file.read())
+        response.headers['Content-Type'] = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+        response.headers['Content-Disposition'] = 'attachment; filename=data.xlsx'
+        return response
