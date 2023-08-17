@@ -61,9 +61,6 @@ def login():
 def home():
     return render_template('home.html')
 
-@app.route('/page')
-def test():
-    return render_template('test.html')
 
 @app.route('/callback',methods=['POST'])
 def callback():
