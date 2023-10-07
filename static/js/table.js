@@ -381,11 +381,9 @@ $( document ).ready(function() {
         console.log($(this).attr("id"))
         $.ajax({
             url: "/download_excel/"+$(this).attr("id"),
-            type: "get",
+            type: "post",
             contentType: "application/json",
-            data: {
-                table_data:table_data
-            },
+            data: JSON.stringify({ table_data: table_data }),
             success: function (response) {
                 var downloadLink = document.createElement('a');
                 downloadLink.href = response.download_url;

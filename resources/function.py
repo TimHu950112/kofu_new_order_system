@@ -126,10 +126,12 @@ class Key_Setting(Resource):
             return make_response(render_template('key.html'))
         elif setting=='get_key':
             return jsonify(data=json.dumps(list(customer.find({},{'name':1,'key':1,'user':1,'_id':0}))))
+
+
             
 class Download_Excel(Resource):
     @login_required
-    def get(self,selection):
+    def post(self,selection):
         id_list=[]
         customer_list=[]
         time_list=[]
@@ -137,7 +139,7 @@ class Download_Excel(Resource):
         order_list=[]
         status_list=[]
         selection=selection.split('-')
-        for i in json.loads(request.args.get('table_data')):
+        for i in json.loads(request.get_json()['table_data']):
             if len(selection)!=3:
                 if selection[0] in i['order_list'] and i['disable']!=1:
                     id_list.append(i['_id'])
